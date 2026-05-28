@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aussie Word Challenge 🦘</title>
+  <meta name="description" content="A Wordle-style word guessing game for Australian kids aged 9-11." />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="shortcut icon" href="favicon.svg" />
+
+  <!-- Google Fonts: Nunito for headings, Inter for body -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Screen-reader announcer (aria-live) -->
+  <div id="aria-announcer" aria-live="assertive" aria-atomic="true" class="sr-only"></div>
+
+  <!-- Toast notification -->
+  <div id="toast" role="alert" aria-live="assertive" class="toast"></div>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       HOME SCREEN
+  ═══════════════════════════════════════════════════════════════ -->
+  <main>
+    <section class="screen" data-screen="home" aria-label="Home">
+      <header class="app-header">
+        <div class="header-wave" aria-hidden="true"></div>
+        <h1 class="app-title">🦘 Aussie Word Challenge</h1>
+        <p class="app-tagline">Guess the Aussie word — have a crack!</p>
+        <div class="streak-badge" aria-label="Your stats"></div>
+      </header>
+
+      <div class="home-content">
+        <h2 class="choose-length-title">Choose your word length:</h2>
+
+        <div class="length-grid" role="group" aria-label="Word length options">
+          <button class="length-btn" data-length="4" aria-label="4-letter words, 5 guesses">
+            <span class="length-number">4</span>
+            <span class="length-label">Letters</span>
+            <span class="length-hint">5 guesses</span>
+          </button>
+          <button class="length-btn" data-length="5" aria-label="5-letter words, 6 guesses">
+            <span class="length-number">5</span>
+            <span class="length-label">Letters</span>
+            <span class="length-hint">6 guesses</span>
+          </button>
+          <button class="length-btn" data-length="6" aria-label="6-letter words, 7 guesses">
+            <span class="length-number">6</span>
+            <span class="length-label">Letters</span>
+            <span class="length-hint">7 guesses</span>
+          </button>
+          <button class="length-btn" data-length="7" aria-label="7-letter words, 8 guesses">
+            <span class="length-number">7</span>
+            <span class="length-label">Letters</span>
+            <span class="length-hint">8 guesses</span>
+          </button>
+        </div>
+
+        <div class="home-actions">
+          <button class="btn-secondary btn-home-stats" aria-label="View your statistics">
+            📊 Stats
+          </button>
+          <button class="btn-secondary btn-howto" aria-label="How to play">
+            ❓ How to Play
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         GAME SCREEN
+    ═══════════════════════════════════════════════════════════════ -->
+    <section class="screen" data-screen="game" hidden aria-label="Game">
+      <header class="game-header">
+        <div class="game-header-left">
+          <button class="btn-icon btn-home" aria-label="Back to home">⬅</button>
+          <span class="word-length-badge" aria-live="polite"></span>
+        </div>
+        <div class="game-header-centre">
+          <h1 class="game-title">🦘 Aussie Word</h1>
+        </div>
+        <div class="game-header-right">
+          <span class="guesses-left" aria-live="polite"></span>
+          <button class="btn-icon btn-stats-game" aria-label="View statistics">📊</button>
+        </div>
+      </header>
+
+      <!-- Score preview -->
+      <div class="score-preview-bar">
+        <span class="score-preview" aria-live="polite">Score: 100</span>
+        <span class="clues-remaining" aria-live="polite">3 clues remaining</span>
+      </div>
+
+      <!-- Clue buttons -->
+      <div class="clue-buttons" role="group" aria-label="Clues"></div>
+
+      <!-- Guess grid -->
+      <div class="guess-grid" role="grid" aria-label="Guess grid"></div>
+
+      <!-- On-screen keyboard -->
+      <div class="keyboard" role="group" aria-label="On-screen keyboard"></div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         POST-GAME SCREEN
+    ═══════════════════════════════════════════════════════════════ -->
+    <section class="screen" data-screen="postgame" hidden aria-label="Game result">
+      <div class="postgame-content">
+        <div class="outcome-banner" role="status" aria-live="polite"></div>
+
+        <div class="word-reveal-section">
+          <div class="word-reveal" aria-label="The word was"></div>
+          <p class="word-definition"></p>
+        </div>
+
+        <div class="pronunciation-section">
+          <p class="phonetic-hint"></p>
+          <button class="speak-btn btn-primary" aria-label="Hear the word pronounced">
+            🔊 Hear it!
+          </button>
+        </div>
+
+        <div class="score-breakdown"></div>
+
+        <div class="postgame-actions">
+          <button class="btn-primary btn-play-again">
+            🎮 Play Again
+          </button>
+          <button class="btn-secondary btn-change-length">
+            🔄 Change Word Length
+          </button>
+          <button class="btn-secondary btn-view-stats">
+            📊 View Stats
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         STATS SCREEN
+    ═══════════════════════════════════════════════════════════════ -->
+    <section class="screen" data-screen="stats" hidden aria-label="Statistics">
+      <header class="stats-header">
+        <button class="btn-icon btn-stats-back" aria-label="Go back">⬅</button>
+        <h2 class="stats-title">📊 Your Stats</h2>
+      </header>
+
+      <!-- Tab bar -->
+      <div class="stats-tabs" role="tablist" aria-label="Word length statistics">
+        <button class="stats-tab active" data-tab="all" role="tab" aria-selected="true">All</button>
+        <button class="stats-tab" data-tab="4" role="tab" aria-selected="false">4</button>
+        <button class="stats-tab" data-tab="5" role="tab" aria-selected="false">5</button>
+        <button class="stats-tab" data-tab="6" role="tab" aria-selected="false">6</button>
+        <button class="stats-tab" data-tab="7" role="tab" aria-selected="false">7</button>
+      </div>
+
+      <div class="stats-content" aria-live="polite"></div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         HOW TO PLAY SCREEN
+    ═══════════════════════════════════════════════════════════════ -->
+    <section class="screen" data-screen="howto" hidden aria-label="How to play">
+      <header class="howto-header">
+        <button class="btn-icon btn-howto-back" aria-label="Go back">⬅</button>
+        <h2 class="howto-title">❓ How to Play</h2>
+      </header>
+
+      <div class="howto-content">
+        <p class="howto-intro">Guess the hidden Australian word in as few tries as possible!</p>
+
+        <h3>After each guess, the tiles change colour:</h3>
+        <div class="colour-examples">
+          <div class="example-row">
+            <div class="tile-example" data-state="correct">B</div>
+            <p><strong>Green:</strong> Right letter, right spot. Bonzer!</p>
+          </div>
+          <div class="example-row">
+            <div class="tile-example" data-state="present">E</div>
+            <p><strong>Yellow:</strong> Right letter, wrong spot. Almost!</p>
+          </div>
+          <div class="example-row">
+            <div class="tile-example" data-state="absent">X</div>
+            <p><strong>Grey:</strong> This letter is not in the word.</p>
+          </div>
+        </div>
+
+        <h3>Clues 🔒</h3>
+        <p>You get <strong>3 clues</strong> per game. Use them wisely — each clue reduces your score by 15 points.</p>
+        <ul>
+          <li>🔒 Does the word have any <strong>repeating letters</strong>?</li>
+          <li>🔒 Does the word have any <strong>rare letters</strong> (Z, Q, X, J, K, V, W)?</li>
+          <li>🔒 See the word's <strong>definition</strong>.</li>
+        </ul>
+
+        <h3>Scoring 🏆</h3>
+        <ul>
+          <li>Start with 100 points</li>
+          <li>Each extra guess costs 10 points</li>
+          <li>Each clue costs 15 points</li>
+          <li>No points if you don't solve it</li>
+        </ul>
+
+        <h3>Word lengths</h3>
+        <p>Choose 4, 5, 6 or 7 letters. More letters = more guesses!</p>
+
+        <p class="howto-footer">Good on ya — get out there and have a crack! 🦘</p>
+
+        <button class="btn-primary btn-howto-back">Let's Play!</button>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
