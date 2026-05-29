@@ -3,6 +3,10 @@ import { WORDS_4 } from './words/words-4.js';
 import { WORDS_5 } from './words/words-5.js';
 import { WORDS_6 } from './words/words-6.js';
 import { WORDS_7 } from './words/words-7.js';
+import { VALID_GUESSES_4 } from './words/valid-guesses-4.js';
+import { VALID_GUESSES_5 } from './words/valid-guesses-5.js';
+import { VALID_GUESSES_6 } from './words/valid-guesses-6.js';
+import { VALID_GUESSES_7 } from './words/valid-guesses-7.js';
 import { storageGet, storageSet, getWordsPlayed, addWordPlayed, resetWordsPlayed } from './utils/storage.js';
 import { calculateScore, getScoreBreakdown, getScoreLabel } from './utils/scoring.js';
 import { recordGame } from './utils/stats.js';
@@ -17,12 +21,16 @@ const ALL_WORDS = {
   7: WORDS_7,
 };
 
-// Build a fast Set of all words for guess validation
+// Build a fast Set of all words for guess validation (answers + extended guesses)
 const VALID_WORDS_SET = new Set([
   ...WORDS_4.map(w => w.word),
   ...WORDS_5.map(w => w.word),
   ...WORDS_6.map(w => w.word),
   ...WORDS_7.map(w => w.word),
+  ...VALID_GUESSES_4,
+  ...VALID_GUESSES_5,
+  ...VALID_GUESSES_6,
+  ...VALID_GUESSES_7,
 ]);
 
 // ── Game State ────────────────────────────────────────────────────────────────
