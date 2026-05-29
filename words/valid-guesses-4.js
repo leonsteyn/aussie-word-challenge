@@ -1214,6 +1214,7 @@ export const VALID_GUESSES_4 = [
   "tour",
   "town",
   "toys",
+  "tram",
   "trap",
   "tray",
   "tree",
